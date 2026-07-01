@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Viking's Chess Banner](public/viking-logo.png)
+![Viking's Chess Banner](client/public/viking-logo.png)
 
 ### *Master Every Move*
 
