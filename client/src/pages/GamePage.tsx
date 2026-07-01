@@ -28,6 +28,8 @@ const FILES = ['a','b','c','d','e','f','g','h'];
 const RANKS = ['8','7','6','5','4','3','2','1'];
 const INIT_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const DEFAULT_ROOM = 'VIKING-ROOM-001';
+const SERVER_URL = (import.meta as any).env?.VITE_SERVER_URL || 'http://localhost:3001';
+
 
 // ─────────────────────────────────────────────────────────────
 // Helpers
@@ -1446,7 +1448,7 @@ export default function GamePage() {
       return;
     }
     try {
-      const res = await fetch('http://localhost:3001/api/player/edit', {
+      const res = await fetch(`${SERVER_URL}/api/player/edit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1522,7 +1524,7 @@ export default function GamePage() {
     localStorage.setItem(`leo_chess_local_game_state_${localId}`, JSON.stringify(body));
 
     try {
-      await fetch('http://localhost:3001/api/game/save', {
+      await fetch(`${SERVER_URL}/api/game/save`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -1879,7 +1881,7 @@ export default function GamePage() {
       const activeLocalId = localStorage.getItem('leo_chess_active_local_id');
       if (activeLocalId) {
         try {
-          await fetch(`http://localhost:3001/api/game/${activeLocalId}`, {
+          await fetch(`${SERVER_URL}/api/game/${activeLocalId}`, {
             method: 'DELETE',
           });
         } catch (e) {
@@ -2021,7 +2023,7 @@ export default function GamePage() {
 
       if (activeLocalId) {
         try {
-          const res = await fetch(`http://localhost:3001/api/game/${activeLocalId}`);
+          const res = await fetch(`${SERVER_URL}/api/game/${activeLocalId}`);
           if (res.ok) {
             const game = await res.json();
             if (game && game.status !== 'ended') {
